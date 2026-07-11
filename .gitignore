@@ -1,0 +1,21 @@
+# Vercel
+.vercel/
+
+# Deps
+node_modules/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Secrets
+.secrets/
+.env
+.env.local
+*.local
+
+# Logs
+*.log
+npm-debug.log*

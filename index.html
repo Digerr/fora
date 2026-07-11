@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ФОРА — форм-гайд спортивных прогнозов</title>
+<meta name="description" content="ФОРА — ежедневный аналитический форм-гайд по спорту. Прогнозы на цифрах, честная статистика, открытый track record.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Open Graph / репосты в Telegram -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="ФОРА — форм-гайд спортивных прогнозов">
+<meta property="og:description" content="Прогнозы на спорт, построенные на цифрах, а не на эмоциях.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Telegram Mini App SDK (безопасно на обычном сайте — просто не активируется) -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- Supabase JS — раскомментируй, когда подключишь базу (см. README) -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="assets/styles.css?v=4">
+</head>
+<body class="has-sticky">
+
+<!-- ============ STICKY COMPACT HEADER (mobile/tablet) ============ -->
+<header class="sticky-header" id="stickyHeader">
+  <a href="#top" class="brand" data-go="home" aria-label="ФОРА — на главную">
+    <svg class="logo-svg" viewBox="0 0 36 36" role="img" aria-hidden="true">
+      <defs>
+        <linearGradient id="lgSticky" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#CE3B22">
+            <animate attributeName="stop-color" values="#CE3B22;#E5852A;#D4A017;#CE3B22" dur="5s" repeatCount="indefinite"/>
+          </stop>
+          <stop offset="100%" stop-color="#D4A017">
+            <animate attributeName="stop-color" values="#D4A017;#CE3B22;#E5852A;#D4A017" dur="5s" repeatCount="indefinite"/>
+          </stop>
+        </linearGradient>
+      </defs>
+      <rect x="1" y="1" width="34" height="34" rx="9" fill="url(#lgSticky)"/>
+      <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
+      <line x1="7" y1="27" x2="29" y2="27" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-linecap="round"/>
+      <polyline points="7,24 13,19 19,21 25,11 29,7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="24,7 29,7 29,12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="29" cy="7" r="2" fill="#fff">
+        <animate attributeName="r" values="2;3;2" dur="1.9s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;.55;1" dur="1.9s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <span class="wm-head serif" aria-label="ФОРА.">
+      <span class="ch" style="--i:0">Ф</span>
+      <span class="ch" style="--i:1">О</span>
+      <span class="ch" style="--i:2">Р</span>
+      <span class="ch" style="--i:3">А</span>
+      <span class="dot" aria-hidden="true"></span>
+    </span>
+  </a>
+  <div class="actions">
+    <button class="themebtn" id="themeBtn2" aria-label="Сменить тему" title="Светлая / тёмная"></button>
+    <button class="burger" id="burger2" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="topbar"><div class="wrap">
+  <span>ФОРА · FORM GUIDE</span>
+  <span class="r"><span class="hideSm" id="tbDate"></span><span class="red">АНАЛИТИКА, НЕ ЛОТЕРЕЯ</span><span>18+</span></span>
+</div></div>
+
+<div class="masthead"><div class="wrap">
+  <div class="mast-top">
+    <span id="editionNo">№ 001</span>
+    <span class="hideSm">АНАЛИТИЧЕСКИЙ ФОРМ-ГАЙД</span>
+    <span id="editionCity">MOSCOW</span>
+  </div>
+  <div class="brandrow">
+    <a href="#top" class="logo-mark" aria-label="ФОРА">
+      <svg viewBox="0 0 64 64" role="img">
+        <rect x="2" y="2" width="60" height="60" rx="11" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <line class="lm-base" x1="12" y1="50" x2="52" y2="50"/>
+        <polyline class="lm-line" points="12,46 23,38 32,42 42,24 52,14"/>
+        <polyline class="lm-arrow" points="44,14 52,14 52,22"/>
+        <circle class="lm-dot" cx="52" cy="14" r="3.4"/>
+      </svg>
+    </a>
+    <div class="wordmark serif">ФОРА<span class="dotred">.</span></div>
+  </div>
+  <div class="mast-sub">
+    <span class="tag">Прогнозы на спорт, построенные на цифрах, а не на эмоциях</span>
+    <nav class="nav-links">
+      <a href="#today" data-go="home">Прогноз дня</a>
+      <a href="#guide" data-go="guide">Лента</a>
+      <a href="#record" data-go="record">Запись</a>
+      <a href="#calc" data-go="calc">Калькулятор</a>
+      <a href="#archive" data-go="more">Архив</a>
+      <a href="#" id="navAdmin">Панель</a>
+    </nav>
+    <div class="mast-actions">
+      <button class="themebtn" id="themeBtn" aria-label="Сменить тему" title="Светлая / тёмная"></button>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</div></div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <div class="dh"><span class="wm serif">ФОРА<span class="dotred">.</span></span><button class="dclose" id="dclose" aria-label="Закрыть">✕</button></div>
+  <nav>
+    <a href="#today" data-go="home"><span class="no">01</span>Прогноз дня</a>
+    <a href="#guide" data-go="guide"><span class="no">02</span>Лента прогнозов</a>
+    <a href="#record" data-go="record"><span class="no">03</span>Турнирная запись</a>
+    <a href="#calc" data-go="calc"><span class="no">04</span>Калькулятор банка</a>
+    <a href="#archive" data-go="more"><span class="no">05</span>Архив</a>
+    <a href="#column" data-go="more"><span class="no">06</span>Колонка</a>
+    <a href="#faq" data-go="more"><span class="no">07</span>Вопросы</a>
+    <a href="#" id="drawerAdmin"><span class="no">08</span>Панель</a>
+  </nav>
+  <div class="dfoot">Думай головой · 18+</div>
+</aside>
+
+<div class="ticker">
+  <div class="lab"><span class="dot"></span>БЛИЖАЙШИЕ</div>
+  <div class="track-wrap"><div class="track" id="ticker"></div></div>
+</div>
+
+<main class="screens">
+
+<!-- ============ ЭКРАН: ГЛАВНАЯ ============ -->
+<section class="screen" data-screen="home">
+  <div class="lead wrap" id="top">
+    <div>
+      <h1 class="serif">Не угадываем. <span class="u">Считаем.</span></h1>
+      <p class="body dropcap" style="margin-top:20px">ФОРА — это ежедневный форм-гайд по спорту. Каждый матч разбирается по десяткам факторов: форма команд, личные встречи, составы, календарь и движение линий. В итоге — прогноз с честной оценкой уверенности и открытый, ничем не прикрашенный результат.</p>
+      <div style="margin-top:6px">
+        <a href="#guide" class="cta" data-go="guide">Читать прогнозы</a>
+        <a href="#record" class="cta ghost" data-go="record">Турнирная запись</a>
+      </div>
+    </div>
+    <div class="aside">
+      <div class="h">От редакции</div>
+      <p style="font-family:var(--serif);font-size:17px;line-height:1.5">«Ставка — это не удача, а дисциплина. Мы показываем логику, а решение всегда за тобой.»</p>
+      <p style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-top:14px">— редакция ФОРА</p>
+      <div class="trend" id="trendBox"></div>
+    </div>
+  </div>
+
+  <section class="block wrap" id="today">
+    <div class="kicker-line"><span class="k">Pick of the day</span><span class="ln"></span></div>
+    <h2 class="sec-h serif">Прогноз дня</h2>
+    <p class="sec-p">Главный выбор редакции — ставка с лучшим соотношением уверенности и ценности из ближайших матчей.</p>
+    <div id="featureWrap"></div>
+  </section>
+</section>
+
+<!-- ============ ЭКРАН: ЛЕНТА ============ -->
+<section class="screen" data-screen="guide">
+  <section class="block wrap" id="guide">
+  <div class="kicker-line"><span class="k">Form Guide</span><span class="ln"></span></div>
+  <h2 class="sec-h serif">Лента прогнозов <span class="cnt" id="countPill">0</span></h2>
+  <div class="toolbar">
+    <div class="tabs" id="sportTabs"></div>
+    <div class="tb-spacer"></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="searchInput" placeholder="Поиск матча…">
+    </div>
+    <select class="msel" id="statusFilter">
+      <option value="all">Все</option><option value="upcoming">Ожидают</option>
+      <option value="win">Прошли</option><option value="lose">Не зашли</option>
+    </select>
+    <select class="msel" id="sortBy">
+      <option value="date">Новые</option><option value="conf">По уверенности</option><option value="odds">По кэфу</option>
+    </select>
+  </div>
+  <div class="guide" id="guideList"></div>
+</section>
+
+</section>
+
+<!-- ============ ЭКРАН: ЗАПИСЬ ============ -->
+<section class="screen" data-screen="record">
+  <section class="block wrap" id="record">
+  <div class="kicker-line"><span class="k">Track Record</span><span class="ln"></span></div>
+  <h2 class="sec-h serif">Турнирная запись</h2>
+  <p class="sec-p">Считается автоматически по всем завершённым прогнозам. Проигрыши не прячутся.</p>
+  <div class="record">
+    <div class="rh"><span>ЗАПИСЬ НА ДИСТАНЦИИ</span><span id="recMeta"></span></div>
+    <div class="rec-cells" id="recCells"></div>
+  </div>
+  <h3 class="serif sub-h">Запись по видам спорта</h3>
+  <table class="btable"><thead><tr><th>Вид спорта</th><th>Прогнозов</th><th>Завершено</th><th>Проходимость</th></tr></thead><tbody id="breakdown"></tbody></table>
+  <h3 class="serif sub-h">Визуализация</h3>
+  <div id="chartsWrap"></div>
+</section>
+
+</section>
+
+<!-- ============ ЭКРАН: КАЛЬКУЛЯТОР ============ -->
+<section class="screen" data-screen="calc">
+  <section class="block wrap" id="calc">
+  <div class="kicker-line"><span class="k">Bankroll</span><span class="ln"></span></div>
+  <h2 class="sec-h serif">Калькулятор банка</h2>
+  <p class="sec-p">Размер ставки по флэту и по Келли. Никогда не ставь больше, чем готов спокойно проиграть.</p>
+  <div class="calc">
+    <div class="calc-in">
+      <div class="field"><label>Банк</label><input id="c_bank" type="number" min="0" value="10000"></div>
+      <div class="field"><label>Риск на ставку, %</label><input id="c_risk" type="number" min="0.1" step="0.1" value="2"></div>
+      <div class="field"><label>Кэф</label><input id="c_odds" type="number" min="1.01" step="0.01" value="1.85"></div>
+      <div class="field"><label>Оценка вероятности, %</label><input id="c_prob" type="number" min="1" max="99" value="60"></div>
+    </div>
+    <div class="calc-out" id="calcOut"></div>
+  </div>
+</section>
+
+</section>
+
+<!-- ============ ЭКРАН: ЕЩЁ ============ -->
+<section class="screen" data-screen="more">
+  <section class="block wrap" id="archive">
+  <div class="kicker-line"><span class="k">Archive</span><span class="ln"></span></div>
+  <h2 class="sec-h serif">Архив по месяцам</h2>
+  <p class="sec-p">Завершённые прогнозы, сгруппированные по месяцам с итогами периода.</p>
+  <div id="archiveList"></div>
+</section>
+
+  <section class="block wrap" id="column">
+  <div class="kicker-line"><span class="k">The Column</span><span class="ln"></span></div>
+  <h2 class="sec-h serif">Колонка редактора</h2>
+  <p class="sec-p">Коротко о главном: как не сливать банк и читать цифры трезво.</p>
+  <div class="arts">
+    <article class="art"><div class="ak">Дисциплина</div><h3 class="serif">Банкролл важнее прогноза</h3><p>Можно угадывать 6 из 10 и всё равно уйти в минус, если ставить хаотичными суммами. Фиксированный размер ставки — 1–2% от банка — держит тебя в игре даже на чёрной серии.</p><div class="by">— редакция ФОРА</div></article>
+    <article class="art"><div class="ak">Математика</div><h3 class="serif">Кэф — это не вероятность</h3><p>Коэффициент уже включает маржу букмекера. Ценность (value) появляется только тогда, когда твоя оценка вероятности выше той, что заложена в линию. Без перевеса — нет ставки.</p><div class="by">— редакция ФОРА</div></article>
+    <article class="art"><div class="ak">Психология</div><h3 class="serif">Тильт убивает стратегию</h3><p>Самая частая причина проигрыша — не плохой прогноз, а попытка отыграться после минуса. План на день и стоп-лосс по количеству ставок важнее любого «чутья».</p><div class="by">— редакция ФОРА</div></article>
+  </div>
+  <h3 class="serif sub-h">Как читать форм-гайд</h3>
+  <div class="cols">
+    <div class="col"><div class="n">I</div><h3 class="serif">Сбор данных</h3><p>Форма, очные встречи, травмы, плотность календаря и линии — в единую картину матча.</p></div>
+    <div class="col"><div class="n">II</div><h3 class="serif">Оценка ценности</h3><p>Каждому исходу — вероятность и уровень уверенности. В ленту идёт только то, что имеет перевес над линией.</p></div>
+    <div class="col"><div class="n">III</div><h3 class="serif">Открытый итог</h3><p>Каждый прогноз получает штамп «прошёл» или «не зашёл», а запись обновляется без исключений.</p></div>
+  </div>
+</section>
+
+  <section class="block wrap" id="faq">
+  <div class="kicker-line"><span class="k">FAQ</span><span class="ln"></span></div>
+  <h2 class="sec-h serif">Частые вопросы</h2>
+  <div class="faq">
+    <details open><summary>Это точно зайдёт?<span class="pm">+</span></summary><div class="ans">Нет. Никто не гарантирует результат отдельного матча — в спорте всегда есть случайность. Мы работаем на дистанции и показываем честную статистику, включая проигрыши.</div></details>
+    <details><summary>Откуда берутся прогнозы?<span class="pm">+</span></summary><div class="ans">Каждый прогноз — это разбор матча по форме команд, личным встречам, составам и движению линий.</div></details>
+    <details><summary>Как часто обновляется лента?<span class="pm">+</span></summary><div class="ans">Новые прогнозы добавляются по мере выхода интересных матчей. Статус обновляется после матча.</div></details>
+    <details><summary>Это призыв делать ставки?<span class="pm">+</span></summary><div class="ans">Нет. Материалы носят информационно-аналитический характер. Азартные игры — 18+, играй ответственно.</div></details>
+  </div>
+</section>
+
+  <section class="sub" id="subscribe"><div class="wrap">
+  <div>
+    <h2 class="serif">Забирай разбор дня первым</h2>
+    <p>Подпишись на Telegram-канал — главный прогноз с разбором приходит туда раньше, чем появится в ленте.</p>
+  </div>
+  <div>
+    <form class="subform" id="subForm"><input type="email" id="subEmail" placeholder="tvoy@email.com" required><button type="submit">Подписаться</button></form>
+    <div class="note">Без спама. Отписаться можно в один клик.</div>
+    <a href="#" class="tg" id="tgLink" target="_blank" rel="noopener">▶ Telegram-канал ФОРА</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap colo">
+  <div>
+    <div class="wm serif">ФОРА<span class="dotred">.</span></div>
+    <p style="margin-top:10px">Аналитический форм-гайд по спорту. Думай головой, а не сердцем.</p>
+    <p style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;margin-top:12px;color:var(--ink-faint)">© <span id="year"></span> ФОРА · ВСЕ ПРАВА ЗАЩИЩЕНЫ</p>
+  </div>
+  <div style="max-width:52ch">
+    <span class="age">18+</span>
+    <p>Контент носит информационно-аналитический характер и не является призывом к участию в азартных играх. Прогнозы не гарантируют результат. Играй ответственно и только на те деньги, потерю которых можешь себе позволить.</p>
+  </div>
+</div></footer>
+</section>
+
+</main>
+
+<!-- ============ BOTTOM TAB BAR ============ -->
+<nav class="tabbar" id="tabbar">
+  <button class="tab" data-go="home" aria-label="Главная">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+    <span>Главная</span>
+  </button>
+  <button class="tab" data-go="guide" aria-label="Лента">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+    <span>Лента</span>
+  </button>
+  <button class="tab" data-go="record" aria-label="Запись">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="7"/><rect x="12" y="7" width="3" height="11"/><rect x="17" y="13" width="3" height="5"/></svg>
+    <span>Запись</span>
+  </button>
+  <button class="tab" data-go="calc" aria-label="Калькулятор">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M16 15h0M8 19h2M12 19h2M16 19h0"/></svg>
+    <span>Банк</span>
+  </button>
+  <button class="tab" data-go="more" aria-label="Ещё">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+    <span>Ещё</span>
+  </button>
+</nav>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+<div class="pull-indicator" id="pullIndicator"><div class="pi-spinner"></div><span class="pi-text">Потяните, чтобы обновить</span></div>
+<div class="onboard" id="onboard"></div>
+
+<script src="assets/config.js?v=4"></script>
+<script src="assets/store.js?v=4"></script>
+<script src="assets/app.js?v=4"></script>
+</body>
+</html>
